@@ -1,4 +1,4 @@
-﻿import {d1i} from '../data'
+﻿import {d1s, d1i} from '../data'
 import {splitLinesByEmptyLines, splitLinesIntoArray, sum, sortDesc} from '../utils'
 
 function q1() {

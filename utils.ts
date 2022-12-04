@@ -13,6 +13,6 @@ export function sortDesc(array: number[]) {
     return array.sort((a, b) => a > b ? -1 : a < b ? 1 : 0);
 }
 
-export function intersect(first: string[], second: string[]): string[] {
+export function intersect<T>(first: T[], second: T[]): T[] {
     return first.filter(val => second.includes(val));
 }
