@@ -5,8 +5,17 @@
 export function splitLinesIntoArray(input: string) {
     return input.split('\n');
 }
+
 export function sum(array: number[]) {
+    if (!array.length) {
+        return 0;
+    }
+
     return array.reduce((total, current) => total + current);
+}
+
+export function sortAsc(array: number[]) {
+    return array.sort((a, b) => b > a ? -1 : b < a ? 1 : 0);
 }
 
 export function sortDesc(array: number[]) {
