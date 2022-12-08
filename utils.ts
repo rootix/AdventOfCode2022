@@ -14,6 +14,10 @@ export function sum(array: number[]) {
     return array.reduce((total, current) => total + current);
 }
 
+export function multiply(array: number[]) {
+    return array.reduce((total, current) => total * current);
+}
+
 export function sortAsc(array: number[]) {
     return array.sort((a, b) => b > a ? -1 : b < a ? 1 : 0);
 }
