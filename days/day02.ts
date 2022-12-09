@@ -1,4 +1,4 @@
-﻿import {d2s, d2i} from '../data'
+﻿import {d02s, d02i} from '../data'
 import {splitLinesIntoArray, sum} from "../utils";
 
 enum Shape {
@@ -14,21 +14,21 @@ interface Round {
 }
 
 function q1() {
-    const score = sum(splitLinesIntoArray(d2i)
+    const score = sum(splitLinesIntoArray(d02i)
         .map(round => round.split(" "))
         .map(hands => <Round>{opponent: getShape(hands[0]), me: getShape(hands[1])})
         .map(playRound));
 
-    console.log("d2q1: " + score);
+    console.log("d02q1: " + score);
 }
 
 function q2() {
-    const score = sum(splitLinesIntoArray(d2i)
+    const score = sum(splitLinesIntoArray(d02i)
         .map(round => round.split(" "))
         .map(hands => <Round>{opponent: getShape(hands[0]), me: getShapeForOutcome(getShape(hands[0]), hands[1])})
         .map(playRound));
 
-    console.log("d2q2: " + score);
+    console.log("d02q2: " + score);
 }
 
 function getShape(input: string): Shape {

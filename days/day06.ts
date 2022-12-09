@@ -1,11 +1,11 @@
-﻿import {d6i, d6s} from "../data";
+﻿import {d06i, d06s} from "../data";
 
 function q1() {
-    console.log("d6q1: " + getMarkerPosition(d6i, 4));
+    console.log("d06q1: " + getMarkerPosition(d06i, 4));
 }
 
 function q2() {
-    console.log("d6q2: " + getMarkerPosition(d6i, 14));
+    console.log("d06q2: " + getMarkerPosition(d06i, 14));
 }
 
 function getMarkerPosition(input: string, distinct: number) {

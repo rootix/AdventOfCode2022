@@ -1,18 +1,18 @@
 ﻿import {splitLinesByEmptyLines, splitLinesIntoArray} from "../utils";
-import {d5i, d5s} from "../data";
+import {d05i, d05s} from "../data";
 
 function q1() {
-    const [inventory, instructions] = splitLinesByEmptyLines(d5i);
+    const [inventory, instructions] = splitLinesByEmptyLines(d05i);
     const stacks = buildStacks(inventory);
     operateCrane("9000", instructions, stacks);
-    console.log("d5q1: " + getTopCrateString(stacks));
+    console.log("d05q1: " + getTopCrateString(stacks));
 }
 
 function q2() {
-    const [inventory, instructions] = splitLinesByEmptyLines(d5i);
+    const [inventory, instructions] = splitLinesByEmptyLines(d05i);
     const stacks = buildStacks(inventory);
     operateCrane("9001", instructions, stacks);
-    console.log("d5q2: " + getTopCrateString(stacks));
+    console.log("d05q2: " + getTopCrateString(stacks));
 }
 
 function buildStacks(inventory: string): string[][] {

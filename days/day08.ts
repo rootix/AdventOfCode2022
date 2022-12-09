@@ -1,16 +1,16 @@
 ﻿import {multiply, splitLinesIntoArray, sum} from "../utils";
-import {d8i, d8s} from "../data";
+import {d08i, d08s} from "../data";
 
 function q1() {
-    const grid = splitLinesIntoArray(d8i).map(row => row.split('').map(Number));
+    const grid = splitLinesIntoArray(d08i).map(row => row.split('').map(Number));
     const visibleTrees = sum(grid.flatMap((_, row) => grid[row].map((_, col) => isVisible(row, col, grid) ? 1 : 0)));
-    console.log('d8q1: ' + visibleTrees);
+    console.log("d08q1: " + visibleTrees);
 }
 
 function q2() {
-    const grid = splitLinesIntoArray(d8i).map(row => row.split('').map(Number));
+    const grid = splitLinesIntoArray(d08i).map(row => row.split('').map(Number));
     const maxScore = Math.max(...grid.flatMap((_, row) => grid[row].map((_, col) => getScore(row, col, grid))));
-    console.log('d8q2: ' + maxScore);
+    console.log("d08q2: " + maxScore);
 }
 
 function isVisible(row: number, column: number, grid: number[][]) {

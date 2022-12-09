@@ -1,5 +1,5 @@
 ﻿import {splitLinesIntoArray} from "../utils";
-import {d9i, d9s} from "../data";
+import {d09i, d09s} from "../data";
 
 interface Vector {
     x: number;
@@ -7,11 +7,11 @@ interface Vector {
 }
 
 function q1() {
-    console.log("d9q1: " + processInstructions(d9i, 2));
+    console.log("d09q1: " + processInstructions(d09i, 2));
 }
 
 function q2() {
-    console.log("d9q2: " + processInstructions(d9i, 10));
+    console.log("d09q2: " + processInstructions(d09i, 10));
 }
 
 const moves: { [key: string]: Vector } = {'R': {x: 1, y: 0}, 'D': {x: 0, y: -1}, 'L': {x: -1, y: 0}, 'U': {x: 0, y: 1}}

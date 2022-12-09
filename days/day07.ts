@@ -1,5 +1,5 @@
 ﻿import {sortAsc, sortDesc, splitLinesIntoArray, sum} from "../utils";
-import {d7i, d7s} from "../data";
+import {d07i, d07s} from "../data";
 
 interface Directory {
     name: string,
@@ -14,16 +14,16 @@ interface File {
 }
 
 function q1() {
-    const rootDir = parseFileSystem(d7i);
-    console.log("d7q1: " + getQ1Size(rootDir));
+    const rootDir = parseFileSystem(d07i);
+    console.log("d07q1: " + getQ1Size(rootDir));
 }
 
 function q2() {
-    const rootDir = parseFileSystem(d7i);
+    const rootDir = parseFileSystem(d07i);
     const allDirSizes = sortAsc(flattenDirSizes(rootDir));
     const unusedSpace = 70000000 - allDirSizes[allDirSizes.length - 1];
     const needsToBeFreedUp = 30000000 - unusedSpace;
-    console.log("d7q2: " + allDirSizes.find(s => s > needsToBeFreedUp));
+    console.log("d07q2: " + allDirSizes.find(s => s > needsToBeFreedUp));
 }
 
 function parseFileSystem(input: string) {
