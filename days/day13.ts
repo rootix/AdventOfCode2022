@@ -9,13 +9,13 @@ function q1() {
 }
 
 function q2() {
-    const pairs = splitLinesByEmptyLines(d13i).flatMap(pair => splitLinesIntoArray(pair).map(part => JSON.parse(part)));
+    const packets = splitLinesByEmptyLines(d13i).flatMap(pair => splitLinesIntoArray(pair).map(part => JSON.parse(part)));
 
     const firstDivider = [[2]];
     const secondDivider = [[6]];
-    pairs.push(firstDivider, secondDivider);
+    packets.push(firstDivider, secondDivider);
 
-    const sortedPairs = pairs.sort(compare);
+    const sortedPairs = packets.sort(compare);
 
     const indexOfFirstDivider = sortedPairs.indexOf(firstDivider) + 1;
     const indexOfSecondDivider = sortedPairs.indexOf(secondDivider) + 1;
