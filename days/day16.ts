@@ -1,98 +1,60 @@
 import {splitLinesIntoArray} from "../utils";
 import {d16i, d16s} from "../data";
 
-interface Step {
-    remaining: number,
-    valve: string,
-    pressure: number,
-    opened: string[]
+function q1() {
+    const {flows, tunnels} = parseInput(d16i);
+    console.log("d16q1: " + getMaxPressure(30, "AA", [], false, flows, tunnels, {}));
 }
 
-// Credit to https://github.com/carrdelling/AdventOfCode2022/blob/main/day16/silver.py
-function q1() {
+function q2() {
+    const {flows, tunnels} = parseInput(d16i);
+    console.log("d16q2: " + getMaxPressure(26, "AA", [], true, flows, tunnels, {}));
+}
+
+function parseInput(input: string): { flows: { [key: string]: number }, tunnels: { [key: string]: string[] } } {
     const flows: { [key: string]: number } = {};
     const tunnels: { [key: string]: string[] } = {};
-    splitLinesIntoArray(d16i)
+    splitLinesIntoArray(input)
         .map(valve => valve.match(/^Valve ([A-Z]{2}) has flow rate=(\d+); tunnels? leads? to valves? (.*)$/).slice(1))
         .forEach(v => {
             flows[v[0]] = Number(v[1]);
             tunnels[v[0]] = v[2].split(", ");
         });
-
-    console.log("d16q1: " + getMaxPressureQueue(flows, tunnels))
-    // console.log("d16q1: " + getMaxPressureRecursive(29, 0, "AA", flows, tunnels, [], {}))
+    return {flows, tunnels};
 }
 
-function getMaxPressureQueue(
-    flows: { [key: string]: number },
-    tunnels: { [key: string]: string[] }) {
-    const queue: Step[] = [{remaining: 29, valve: 'AA', pressure: 0, opened: []}];
-    const cache: { [key: string]: number } = {};
+function getMaxPressure(remaining: number,
+                        valve: string,
+                        opened: string[],
+                        withElephant: boolean,
+                        flows: { [key: string]: number },
+                        tunnels: { [key: string]: string[] },
+                        cache: { [key: string]: number }): number {
+    if (remaining <= 0) {
+        return withElephant ? getMaxPressure(26, "AA", opened, false, flows, tunnels, cache) : 0;
+    }
+
+    const cacheKey = `${remaining};${valve};${withElephant};${opened.join('')}`;
+    if (cache.hasOwnProperty(cacheKey)) {
+        return cache[cacheKey];
+    }
+
     let maxPressure = 0;
-
-    while (queue.length) {
-        const {remaining, valve, pressure, opened} = queue.pop();
-        if (cache.hasOwnProperty(`${remaining};${valve}`)) {
-            if (cache[`${remaining};${valve}`] >= pressure) {
-                continue
-            }
-        }
-
-        cache[`${remaining};${valve}`] = pressure;
-
-        if (remaining === 0) {
-            maxPressure = Math.max(maxPressure, pressure);
-            continue;
-        }
-
-        if (flows[valve] > 0 && !opened.includes(valve)) {
-            const newPressure = pressure + [...opened, valve].reduce((sum, valve) => sum + flows[valve], 0);
-            queue.push({remaining: remaining - 1, pressure: newPressure, valve, opened: [...opened, valve]});
-        }
-
-        const newPressure = pressure + opened.reduce((sum, valve) => sum + flows[valve], 0);
-        tunnels[valve].forEach(v => {
-            queue.push({remaining: remaining - 1, pressure: newPressure, valve: v, opened});
+    if (flows[valve] > 0 && !opened.includes(valve)) {
+        const valvePressure = (remaining - 1) * flows[valve];
+        const openedWithValve = opened.concat(valve).sort();
+        tunnels[valve].forEach(tunnel => {
+            maxPressure = Math.max(maxPressure, valvePressure + getMaxPressure(remaining - 2, tunnel, openedWithValve, withElephant, flows, tunnels, cache));
         })
     }
 
+    tunnels[valve].forEach(tunnel => {
+        maxPressure = Math.max(maxPressure, getMaxPressure(remaining - 1, tunnel, opened, withElephant, flows, tunnels, cache));
+    })
+
+    cache[cacheKey] = maxPressure;
     return maxPressure;
 }
 
-
-// G*d d*mn, why does this recursive version give the correct result for the sample, but not for my input?!
-// function getMaxPressureRecursive(remaining: number,
-//                                  pressure: number,
-//                                  valve: string,
-//                                  flows: { [key: string]: number },
-//                                  tunnels: { [key: string]: string[] },
-//                                  opened: string[],
-//                                  cache: { [key: string]: number }): number {
-//     if (cache.hasOwnProperty(`${remaining};${valve}`)) {
-//         if (cache[`${remaining};${valve}`] >= pressure) {
-//             return cache[`${remaining};${valve}`];
-//         }
-//     }
-//
-//     cache[`${remaining};${valve}`] = pressure;
-//
-//     if (remaining === 0) {
-//         return pressure;
-//     }
-//
-//     let maxPressure = 0;
-//
-//     if (flows[valve] > 0 && !opened.includes(valve)) {
-//         const newPressure = pressure + [...opened, valve].reduce((sum, valve) => sum + flows[valve], 0);
-//         maxPressure = Math.max(maxPressure, getMaxPressureRecursive(remaining - 1, newPressure, valve, flows, tunnels, [...opened, valve], cache))
-//     }
-//
-//     const newPressure = pressure + opened.reduce((sum, valve) => sum + flows[valve], 0);
-//     tunnels[valve].forEach(v => {
-//         maxPressure = Math.max(maxPressure, getMaxPressureRecursive(remaining - 1, newPressure, v, flows, tunnels, opened, cache))
-//     })
-//
-//     return maxPressure;
-// }
-
 q1();
+q2();
